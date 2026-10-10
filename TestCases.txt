@@ -1,0 +1,99 @@
+1SMARTLIBRARY CONSOLE INPUT AND FEATURE GUIDE
+
+The application displays the main menu and prompts with "Enter choice:".
+Enter one menu number at a time. After each feature finishes, the main menu is
+shown again. The sample documents below are loaded into the in-memory library
+when the application starts:
+
+ID  Type             Title
+1   Research Paper   Introduction to Machine Learning
+2   Journal          Data Structures for Research
+3   Book             Algorithms in Java
+
+Documents added with option 2 are stored in the Library's in-memory list. They
+are available for display and search until the program exits; the program does
+not currently save them to a file or database.
+
+1) Display Documents
+What it does: Displays every document currently in the in-memory library.
+Prompts and input:
+	Enter choice: 1
+No additional input is requested.
+
+2) Add Document
+What it does: Creates a Document from the values below and adds it to the
+in-memory library list. IDs should be unique to avoid confusion when selecting
+a document later.
+Prompts and example input:
+	Enter choice: 2
+	ID: 4
+	Type: Book
+	Title: Sample Algorithms
+	Author: Demo Author
+	Content: banana bandana algorithms
+Expected: "Document added." The new document can be viewed with option 1 or
+selected by ID in options 3, 4, and 5. It is not retained after exit.
+
+3) Single Keyword Search
+What it does: Searches the content of the selected document for one keyword.
+The algorithm choice is prompted after the document ID and keyword.
+Prompts and example input (Naive Search):
+	Enter choice: 3
+	Enter document ID: 1
+	Enter keyword: machine learning
+	Algorithm: 1
+Algorithm choices: 1=Naive, 2=KMP, 3=Z Algorithm, 4=Rabin-Karp.
+Expected for the example: match positions [0, 57] (positions are zero-based).
+Try the other algorithms by repeating option 3 and entering their number at
+the Algorithm prompt. The search reads document content and does not store a
+new document or change the content.
+
+4) Aho-Corasick Multiple Keyword Search
+What it does: Searches one selected document for several keywords in a single
+pass and prints each keyword with its zero-based match positions.
+Prompts and example input:
+	Enter choice: 4
+	Enter document ID: 1
+	Enter keywords separated by comma: machine, research
+The document ID selects the text to search. Separate keywords with commas.
+The search does not change or store the document.
+
+5) Suffix Array + LCP
+What it does: Builds a suffix array for a short text, then uses Kasai's
+algorithm to calculate the LCP array (longest common prefixes of neighboring
+sorted suffixes).
+Prompts and example input:
+	Enter choice: 5
+	Enter document ID: 1
+	Enter short text for suffix demonstration: banana
+The document ID must identify an existing document. The text entered at the
+last prompt is what gets indexed. If that prompt is left empty, the selected
+document's full content is indexed instead.
+Expected for "banana": suffix array [5, 3, 1, 0, 4, 2] and LCP array
+[1, 3, 0, 0, 2, 0]. This operation only calculates and displays the indexes.
+
+6) Document/String Comparison (DP)
+What it does: Compares two entered strings using Levenshtein distance,
+Needleman-Wunsch global alignment, and Smith-Waterman local alignment.
+Prompts and example input:
+	Enter choice: 6
+	String/Document A: kitten
+	String/Document B: sitting
+Expected: Levenshtein distance 3, followed by alignment scores and aligned
+strings from Needleman-Wunsch and Smith-Waterman. The two inputs are compared
+as entered; this option does not look up or modify saved documents.
+
+7) Bitmask Resource Selection
+What it does: Uses Bitmask DP to choose the highest-value combination of
+predefined resources within a fixed budget. No resource or budget prompts are
+currently implemented; only the menu choice is needed:
+	Enter choice: 7
+Resources in the program: Research Paper A (cost 4, value 8), Journal B
+(cost 5, value 9), Book C (cost 3, value 6), Research Paper D (cost 2, value 4).
+Budget: 8. Expected maximum value: 15, total cost: 8, selected resources:
+Journal B and Book C. This calculation does not store or modify library
+documents.
+
+0) Exit
+What it does: Closes the application.
+	Enter choice: 0
